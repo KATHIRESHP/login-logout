@@ -1,0 +1,71 @@
+const express = require('express')
+const mongoose = require('mongoose')
+const dotenv = require('dotenv')
+const cors = require('cors')
+const User = require('./User')
+
+const app = express();
+
+dotenv.config();
+app.use(cors());
+app.use(express.json());
+
+
+mongoose.connect(process.env.CONN_STR)
+    .then((con) => console.log("db connnected"))
+    .catch((err) => console.log("error occurred"));
+
+
+
+app.post('/register', async function(req, res){
+    try {
+        const name = req.body.name;
+        const email = req.body.email;
+        const phno = req.body.phno;
+        const password = req.body.password;
+
+        const user = await User.create({
+            name,
+            email,
+            phno,
+            password
+        })
+        user.save();
+        console.log(user);
+    }
+    catch(err){
+        console.log(err);
+    }
+})
+
+
+app.listen(process.env.PORT, () => console.log("server listening"));
+
+
+
+
+
+
+
+
+
+
+// const testData = async () => {
+//     try{
+//         const user = await User.create({
+//             name: "Kathiresh",
+//             email: "kathire@gmal.com",
+//             phno: 8283293629,
+//             password: "Neet*2020"
+//         })
+
+//         user.save()
+//         console.log(user);
+//     }
+//     catch(err)
+//     {
+//         console.log(err);
+//     }
+// }
+
+// testData();

@@ -31,10 +31,16 @@ app.post('/register', async function(req, res){
             password
         })
         user.save();
+
+        res.send({msg: "Success"});
+
         console.log(user);
     }
     catch(err){
         console.log(err);
+        console.log("\nThis is the error msg\n");
+        console.log(err.message);
+        res.send({msg: err.message});
     }
 })
 

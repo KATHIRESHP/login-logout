@@ -15,11 +15,9 @@ mongoose.connect(process.env.CONN_STR)
     .then((con) => console.log("db connnected"))
     .catch((err) => console.log("error occurred"));
 
-app.post('/emailverify', (req, res) => {
+app.post('/emailverify', async (req, res) => {
     const email = req.body.email;
-    const otp = Mailer.generateEmail(email);
-    // res.send({msg: otp});
-    console.log(otp);
+    await Mailer.generateEmail(req, res, email);
 })
 
 app.post('/register', async function(req, res){

@@ -3,7 +3,7 @@ const mongoose = require('mongoose')
 const dotenv = require('dotenv')
 const cors = require('cors')
 const User = require('./User')
-
+const Mailer = require('./Mailer')
 const app = express();
 
 dotenv.config();
@@ -15,7 +15,12 @@ mongoose.connect(process.env.CONN_STR)
     .then((con) => console.log("db connnected"))
     .catch((err) => console.log("error occurred"));
 
-
+app.post('/emailverify', (req, res) => {
+    const email = req.body.email;
+    const otp = Mailer.generateEmail(email);
+    // res.send({msg: otp});
+    console.log(otp);
+})
 
 app.post('/register', async function(req, res){
     try {

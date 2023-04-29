@@ -16,19 +16,16 @@ function Login() {
 
   const sendOtpHandler = (e) => {
     e.preventDefault();
-    console.log("Email verification");
     let email_pattern = /^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/;
     if (email_pattern.test(email)) {
       axios.post('http://localhost:3030/emailverify', { email: email })
         .then((res) => {
-          toast.success(`Success`, {
+          toast.success(`OTP sent\nPlease also check spam folders`, {
             autoClose: 2000,
             theme: 'dark'
           })
           setOtp(res.data.msg);
-          console.log("Success, OTP is " + otp);
           setIsVerifyBtnClicked(true);
-          console.log("isVeribtnclicked set to true");
         })
         .catch((err) => {
           toast.error("error occured!!")
@@ -49,25 +46,32 @@ function Login() {
       toast.success("Email verification success", {
         autoClose: 3000
       })
-      setTimeout(() => {
-        setIsEmailVerified(true);
-        console.log(email);
-      }, 4000);
+      setIsEmailVerified(true);
+    }
+    else
+    {
+      toast.error("Invalid OTP");
     }
   }
 
-    // useEffect(() => {
-    //   console.log("this verify click count" + isVerifyBtnClicked);
-    // })
-
   const clickHandler = (e) => {
     e.preventDefault();
-    console.log(nameRef.current.value); 
-    console.log(email);
-    console.log(phnoRef.current.value);
-    console.log(passwordRef.current.value);
     axios.post("http://localhost:3030/register", { name: nameRef.current.value, email: email, phno: phnoRef.current.value, password: passwordRef.current.value })
-      .then((data) => console.log("Send successfuly\nmsg:\n", data.data.msg))
+      .then((data) => {
+        console.log(data.data.msg);
+        if(data.data.msg === "error")
+        {
+          toast.error("Error in registeration or Duplication of email", {
+            theme: "light"
+          })
+        }
+        else
+      {
+        toast.success("Successfully registered", {
+          autoClose: 2000
+        })
+      }
+      })
       .catch((err) => console.log("error occured\nmsg:\n", err));
   }
 
@@ -86,7 +90,7 @@ function Login() {
                     <input onChange={(e) => setEmail(e.target.value)} type="email" className="form-control" id="floatingEmail" placeholder="Password" />
                     <label htmlFor="floatingEmail">Email</label>
                   </div>
-                  <center><button className='btn btn-outline-warning mt-3' onClick={(e) => sendOtpHandler(e)}>Sendotp</button></center>
+                  <center><button className='btn btn-outline-primary mt-3' onClick={(e) => sendOtpHandler(e)}>Send Otp</button></center>
                 </>
               }
               <></>

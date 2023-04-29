@@ -17,6 +17,7 @@ mongoose.connect(process.env.CONN_STR)
 
 app.post('/emailverify', async (req, res) => {
     const email = req.body.email;
+    // const user = await User.where({email: email});
     await Mailer.generateEmail(req, res, email);
 })
 
@@ -43,7 +44,7 @@ app.post('/register', async function(req, res){
         console.log(err);
         console.log("\nThis is the error msg\n");
         console.log(err.message);
-        res.send({msg: err.message});
+        res.send({msg: "error"});
     }
 })
 

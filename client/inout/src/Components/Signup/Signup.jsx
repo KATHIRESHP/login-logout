@@ -3,7 +3,7 @@ import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-function Login() {
+function Signup() {
 
   const nameRef = useRef("");
   const [email, setEmail] = useState("");
@@ -132,4 +132,4 @@ function Login() {
   )
 }
 
-export default Login
+export default Signup

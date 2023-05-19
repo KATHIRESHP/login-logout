@@ -16,6 +16,7 @@ function Signup() {
   const [otp, setOtp] = useState("");
   const navigate = useNavigate();
 
+
   const sendOtpHandler = (e) => {
     e.preventDefault();
     let email_pattern = /^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/;
@@ -81,7 +82,7 @@ function Signup() {
     <>
       <ToastContainer />
       <div className='fluid-container bg-info vh-100 d-flex justify-content-center align-items-center'>
-        <div className='bg-light col-lg-4 col-md-6 col-sm-10 offset-sm-0 p-sm-5 p-md-5 rounded-4 shadow-lg'>
+        <div className='bg-light col-md-9 col-sm-11 col-lg-6 offset-sm-0 p-sm-5 p-md-5 rounded-4 shadow-lg'>
           <center className='display-6 border-bottom border-info mb-2 pb-3'>Register with KCS</center>
 
           {!isEmailVerified &&

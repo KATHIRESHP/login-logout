@@ -10,14 +10,12 @@ dotenv.config();
 app.use(cors());
 app.use(express.json());
 
-
 mongoose.connect(process.env.CONN_STR)
     .then((con) => console.log("db connnected"))
     .catch((err) => console.log("error occurred"));
 
 app.post('/emailverify', async (req, res) => {
     const email = req.body.email;
-    // const user = await User.where({email: email});
     await Mailer.generateEmail(req, res, email);
 })
 
@@ -52,15 +50,24 @@ app.post('/login', async function(req, res) {
     try{
         const email = req.body.email;
         const password = req.body.password;
-        const user_name = await User.where({email: email, password: password});
-        console.log("User name "+ JSON.stringify(user_name));
+        let user_details = await User.where({email: email, password: password});
+        if(user_details.length === 0)
+        {
+            console.log("no such file found");
+            res.send([{msg: "no_user"}]);
+        }
+        else
+        {
+            console.log("file found");
+            res.send([{msg: "user_found"}, {user_details: user_details}]);
+        }
     }
     catch (e) {
         console.log("Exception "+ e);
-    }
+    } 
 })
 
-app.listen(process.env.PORT, () => console.log("server listening"));
+app.listen(process.env.PORT, () => console.log("server listening")); 
 
 
 

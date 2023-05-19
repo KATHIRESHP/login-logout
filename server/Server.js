@@ -48,6 +48,17 @@ app.post('/register', async function(req, res){
     }
 })
 
+app.post('/login', async function(req, res) {
+    try{
+        const email = req.body.email;
+        const password = req.body.password;
+        const user_name = await User.where({email: email, password: password});
+        console.log("User name "+ JSON.stringify(user_name));
+    }
+    catch (e) {
+        console.log("Exception "+ e);
+    }
+})
 
 app.listen(process.env.PORT, () => console.log("server listening"));
 

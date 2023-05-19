@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from 'react'
 import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import {useNavigate} from "react-router-dom";
 
 function Signup() {
 
@@ -13,6 +14,7 @@ function Signup() {
   const [isEmailVerified, setIsEmailVerified] = useState(false);
   const [isVerifyBtnClicked, setIsVerifyBtnClicked] = useState(false);
   const [otp, setOtp] = useState("");
+  const navigate = useNavigate();
 
   const sendOtpHandler = (e) => {
     e.preventDefault();
@@ -72,7 +74,7 @@ function Signup() {
         })
       }
       })
-      .catch((err) => console.log("error occured\nmsg:\n", err));
+      .catch((err) => console.log("error occurred\nmsg:\n", err));
   }
 
   return (
@@ -91,6 +93,9 @@ function Signup() {
                     <label htmlFor="floatingEmail">Email</label>
                   </div>
                   <center><button className='btn btn-outline-primary mt-3' onClick={(e) => sendOtpHandler(e)}>Send Otp</button></center>
+                  <center>
+                    <button onClick={() => navigate('/login')} className='mt-5 btn btn-outline-primary'>Signin</button>
+                  </center>
                 </>
               }
               <></>

@@ -12,7 +12,7 @@ app.use(express.json());
 
 mongoose.connect(process.env.CONN_STR)
     .then((con) => console.log("db connnected"))
-    .catch((err) => console.log("error occurred"));
+    .catch((err) => console.log("error occurred"+ err));
 
 app.post('/emailverify', async (req, res) => {
     const email = req.body.email;

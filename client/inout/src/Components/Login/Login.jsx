@@ -77,7 +77,7 @@ function Login() {
                             <center><button className='btn btn-warning mb-4' onClick={() => navigate('/pwdreset')}>Pasword Reset</button></center>
                         }
                         <center><button className='btn btn-outline-primary' onClick={(e) => loginHandler(e)}>Login</button></center>
-                        <center><button className='btn btn-outline-primary mt-5' onClick={(e) => navigate('/')}>Signup</button></center>
+                        <center><button className='btn mt-5 text-warning' onClick={(e) => navigate('/')}>Need to create one!</button></center>
                     </form>
                 </div>
             </div>

@@ -19,6 +19,28 @@ app.post('/emailverify', async (req, res) => {
     await Mailer.generateEmail(req, res, email);
 })
 
+app.post('/pwdresetotp', async (req, res) => {
+    const email = req.body.email;
+    await Mailer.generateEmail(req, res, email);
+})
+
+app.post('/pwdreset', async (req, res) => {
+    const email = req.body.email;
+    const password = req.body.password;
+    console.log("Password reset called!!");
+    try
+    { 
+        const user = await User.findOne({email: email});
+        user.password = password;
+        await user.save();
+        res.send({msg: "success"});
+    }
+    catch(e)
+    {
+
+    }
+})
+
 app.post('/register', async function(req, res){
     try {
         const name = req.body.name;

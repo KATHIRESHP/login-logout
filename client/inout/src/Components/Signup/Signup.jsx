@@ -78,8 +78,7 @@ function Signup() {
     <>
       <ToastContainer />
       <div className='fluid-container bg-info vh-100 d-flex justify-content-center align-items-center'>
-        <form>
-          <div className='bg-light col-md-9 col-sm-11 col-lg-6 offset-sm-0 p-sm-5 p-md-5 rounded-4 shadow-lg'>
+          <div className='bg-light col-md-9 col-sm-11 col-lg-6 col-xl-4 offset-sm-0 p-sm-5 p-md-5 rounded-4 shadow-lg'>
             <center className='display-6 border-bottom border-info mb-2 pb-3'>Register with KCS</center>
 
             {!isEmailVerified &&
@@ -92,7 +91,7 @@ function Signup() {
                     </div>
                     <center><button className='btn btn-outline-primary mt-3' onClick={(e) => sendOtpHandler(e)}>Send Otp</button></center>
                     <center>
-                      <button onClick={() => navigate('/login')} className='mt-5 btn btn-outline-primary'>Signin</button>
+                      <button onClick={() => navigate('/login')} className='btn text-warning'>Already have one...</button>
                     </center>
                   </>
                 }
@@ -130,7 +129,6 @@ function Signup() {
               </>
             }
           </div>
-        </form>
       </div>
     </>
   )

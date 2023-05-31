@@ -1,4 +1,4 @@
-import React, { useContext, useRef } from 'react';
+import React, { useContext, useRef, useState } from 'react';
 import { toast, ToastContainer } from "react-toastify";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
@@ -10,6 +10,7 @@ function Login() {
     const passwordRef = useRef(null);
     const navigate = useNavigate();
     const [token , setToken] = useContext(Context);
+    const [loginFailed, setLoginFailed] = useState(false);
 
     const loginHandler = async (e) => {
         e.preventDefault();
@@ -45,6 +46,7 @@ function Login() {
                 })
         }
         else {
+            setLoginFailed(true);
             toast('Check Your Credentials!', {
                 autoClose: 2000,
                 theme: "dark"
@@ -66,6 +68,7 @@ function Login() {
                         <input ref={passwordRef} type="password" className="form-control" id="floatingPasword" placeholder="number" />
                         <label htmlFor="floatingPasword">Password</label>
                     </div>
+                    <center><button>Pasword Reset</button></center>
                     <center><button className='btn btn-outline-primary' onClick={(e) => loginHandler(e)}>Login</button></center>
                     <center><button className='btn btn-outline-primary mt-5' onClick={(e) => navigate('/')}>Signup</button></center>
                 </div>

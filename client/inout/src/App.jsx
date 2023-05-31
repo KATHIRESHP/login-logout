@@ -4,6 +4,7 @@ import Login from "./Components/Login/Login";
 import Home from './Components/Home/Home';
 import Protectedroutes from './Components/Protectedroutes';
 import React, { useState } from 'react';
+import Password_Reset from './Components/Login/Password_Reset';
 
 export const Context = React.createContext();
 
@@ -18,6 +19,7 @@ function App() {
           <Routes>
             <Route path='/' element={<Signup />} />
             <Route path='/login' element={<Login />} />
+            <Route path='/pwdreset' element={<Password_Reset/>}/>
             <Route element={<Protectedroutes />}>
               <Route path='/home' element={<Home />} />
             </Route>

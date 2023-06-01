@@ -1,5 +1,5 @@
 import axios from 'axios';
-import React, { useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 
@@ -9,7 +9,7 @@ const Password_Reset = () => {
   const emailRef = useRef(null);
   const passwordRef = useRef(null);
   const confirmPasswordRef = useRef(null);
-  const errorNotifier = useRef(null);
+  const [timer, setTimer] = useState(10);
   const [otpSend, setOtpSend] = useState(false);
 
   const otpSendHandler = (e) => {
@@ -34,8 +34,7 @@ const Password_Reset = () => {
         .then((data) => {
           console.log("entered");
           console.log(data.data.msg);
-          if(data.data.msg == "success")
-          {
+          if (data.data.msg == "success") {
             toast.success("Password reset Success");
             setTimeout(() => {
               navigate('/login');
@@ -53,6 +52,25 @@ const Password_Reset = () => {
     }
 
   }
+
+  
+
+  useEffect(() => {
+      const interval = setInterval(() => {
+        if (timer > 0 && otpSend) {
+          console.log(timer);
+          setTimer((e) => e - 1);
+        } else {
+          if(otpSend)
+          {
+            navigate('/login');
+          }
+          clearInterval(interval);
+        }
+      }, 1000);
+
+    return () => clearInterval(interval);
+  }, [timer, otpSend]);
 
   return (
     <div>
@@ -80,11 +98,14 @@ const Password_Reset = () => {
                   <input type="password" className="form-control my-4" id="floatingConfirmPassword" placeholder="n" ref={confirmPasswordRef} />
                   <label htmlFor="floatingConfirmPassword">Confirm Password</label>
                 </div>
-                <center className='' ref={errorNotifier}></center>
                 <center><button className='btn btn-warning' onClick={(e) => resetHandler(e)}>Reset</button></center>
               </form>
             </>
           }
+          <></>
+          <center>
+            <button className='btn btn-warning p-3'>{timer} secs</button>
+          </center>
         </div>
       </div>
     </div>

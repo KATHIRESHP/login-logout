@@ -9,19 +9,38 @@ const Password_Reset = () => {
   const emailRef = useRef(null);
   const passwordRef = useRef(null);
   const confirmPasswordRef = useRef(null);
-  const [timer, setTimer] = useState(10);
+  const [timer, setTimer] = useState(1200);
   const [otpSend, setOtpSend] = useState(false);
+  const [otpVerified, setOtpVerified] = useState(false);
+  const [otp, setOtp] = useState("");
+  const otpRef = useRef(null);
 
   const otpSendHandler = (e) => {
     e.preventDefault();
     axios.post('http://localhost:3030/pwdresetotp', { email: emailRef.current.value })
       .then((data) => {
         setOtpSend(true);
+        setOtp(data.data.msg);
         console.log("Send success\n" + data.data.msg);
       })
       .catch((err) => {
         console.log("error occred" + err);
       });
+  }
+
+  const otpVerificationHandler = (e) => {
+    e.preventDefault();
+    if(otp === otpRef.current.value && otp)
+    {
+      toast.success("Verification success :)",{
+        autoClose: 2000
+      })
+      setOtpVerified(true);
+    }
+    else
+    {
+      toast.error("Please verify otp again :(");
+    }
   }
 
   const resetHandler = (e) => {
@@ -53,21 +72,17 @@ const Password_Reset = () => {
 
   }
 
-  
-
   useEffect(() => {
-      const interval = setInterval(() => {
-        if (timer > 0 && otpSend) {
-          console.log(timer);
-          setTimer((e) => e - 1);
-        } else {
-          if(otpSend)
-          {
-            navigate('/login');
-          }
-          clearInterval(interval);
+    const interval = setInterval(() => {
+      if (timer > 0 && otpSend) {
+        setTimer((e) => e - 1);
+      } else {
+        if (otpSend) {
+          navigate('/login');
         }
-      }, 1000);
+        clearInterval(interval);
+      }
+    }, 1000);
 
     return () => clearInterval(interval);
   }, [timer, otpSend]);
@@ -87,7 +102,17 @@ const Password_Reset = () => {
               <center><button className='btn btn-danger my-4' onClick={(e) => otpSendHandler(e)}>Send Otp</button></center>
             }
           </form>
-          {otpSend &&
+          {(otpSend && !otpVerified) &&
+            <>
+              <div className="form-floating mt-4">
+                <input ref={otpRef} type="password" className="form-control" id="floatingOtp" placeholder="n" />
+                <label htmlFor="floatingPasword">OTP</label>
+              </div>
+              <center><button className='btn btn-success my-3' onClick={(e) => otpVerificationHandler(e)}>verify otp</button></center>
+            </>
+          }
+          <></>
+          {otpVerified &&
             <>
               <form>
                 <div className="form-floating mt-4">
@@ -98,7 +123,7 @@ const Password_Reset = () => {
                   <input type="password" className="form-control my-4" id="floatingConfirmPassword" placeholder="n" ref={confirmPasswordRef} />
                   <label htmlFor="floatingConfirmPassword">Confirm Password</label>
                 </div>
-                <center><button className='btn btn-warning' onClick={(e) => resetHandler(e)}>Reset</button></center>
+                <center><button className='btn btn-success mb-4' onClick={(e) => resetHandler(e)}>Reset</button></center>
               </form>
             </>
           }

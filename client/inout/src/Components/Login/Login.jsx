@@ -62,7 +62,7 @@ function Login() {
         <>
             <ToastContainer />
             <div className='fluid-container bg-info vh-100 d-flex justify-content-center align-items-center'>
-                <div className='bg-light col-md-9 col-sm-11 col-lg-6 offset-sm-0 p-sm-5 p-md-5 rounded-4 shadow-lg'>
+                <div className='bg-light col-md-9 col-sm-11 col-lg-6 col-xl-5 offset-sm-0 p-sm-5 p-md-5 rounded-4 shadow-lg'>
                     <center><div className='display-6 mb-5'>Login</div></center>
                     <form>
                         <div className="form-floating">

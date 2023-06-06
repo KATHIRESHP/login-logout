@@ -65,10 +65,20 @@ function Signup() {
             theme: "light"
           })
         }
+        else if(data.data.msg === "Duplicate")
+        {
+          toast.error("User already found! redirecting...");
+          setTimeout(() => {
+              navigate('/login');
+          }, 5000);
+        }
         else {
           toast.success("Successfully registered", {
             autoClose: 2000
           })
+          setTimeout(() => {
+            navigate('/login');
+          }, 2000)
         }
       })
       .catch((err) => console.log("error occurred\nmsg:\n", err));
